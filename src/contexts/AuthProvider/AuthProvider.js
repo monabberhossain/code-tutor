@@ -8,6 +8,7 @@ import {
     signOut,
     updateProfile,
     sendEmailVerification,
+    sendPasswordResetEmail,
 } from "firebase/auth";
 import app from "../../firebase/firebase.config";
 
@@ -46,6 +47,10 @@ const AuthProvider = ({ children }) => {
         return signOut(auth);
     };
 
+    const resetPassword = (email) => {
+        sendPasswordResetEmail(auth, email);
+    }
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser === null || currentUser.emailVerified) {
@@ -68,6 +73,7 @@ const AuthProvider = ({ children }) => {
         verifyEmail,
         signIn,
         logOut,
+        resetPassword
     };
     return (
         <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

@@ -5,12 +5,70 @@ import Form from "react-bootstrap/Form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { ButtonGroup, Col } from "react-bootstrap";
-import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const Login = () => {
+    const [error, setError] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const { signIn, user, resetPassword, } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || "/";
+
+    const handleLogin = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password);
+
+        signIn(email, password)
+            .then((result) => {
+                const user = result.user;
+                form.reset();
+                setError("");
+                // if (user.emailVerified) {
+
+                // } else {
+                //     toast.error(
+                //         "Your email is not verified. Please verify email."
+                //     );
+                // }
+
+                if (!user.emailVerified) {
+                    toast.error(
+                        "Your email is not verified. Please verify email."
+                    );
+                }
+            })
+            .catch((error) => {
+                setError(error.message);
+                console.log(error);
+            });
+        // .finally(() => {
+        //     setLoading(false);
+        // })
+    };
+
+    useEffect(() => {
+        if (user && user.emailVerified) {
+            navigate(from, { replace: true });
+        }
+    }, [user, navigate, from]);
+
+    const handleForgotPassword = () => {
+        if (!userEmail) {
+            alert("Please enter your email address.");
+            return;
+        }
+        resetPassword(userEmail)
+            .then(() => {toast.error("Your email is not verified. Please verify email.");})
+            .catch((error) => console.log(error));
+    };
     return (
         <Col lg={6}>
-            <Form>
+            <Form onSubmit={handleLogin}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
@@ -33,6 +91,7 @@ const Login = () => {
                     <small>
                         Forgot Password? Please
                         <Link
+                            onClick={handleForgotPassword}
                             style={{
                                 textDecoration: "none",
                                 marginLeft: "3px",
@@ -50,9 +109,7 @@ const Login = () => {
                 >
                     <b>Login</b>
                 </Button>
-                <Form.Text className="mx-2 text-danger"></Form.Text>
-
-                {/* {!successLogin && ( */}
+                <Form.Text className="mx-2 text-danger">{error}</Form.Text>
                 <p className="mt-3">
                     <small>
                         New to this site? Please
@@ -68,7 +125,6 @@ const Login = () => {
                         </Link>
                     </small>
                 </p>
-                {/* )} */}
             </Form>
             <ButtonGroup className="mb-5" vertical>
                 <Button
@@ -81,8 +137,7 @@ const Login = () => {
                     className="rounded-2 d-flex align-items-center"
                     variant="outline-dark"
                 >
-                    <FaGithub className="me-1"></FaGithub> Sign In with
-                    Github
+                    <FaGithub className="me-1"></FaGithub> Sign In with Github
                 </Button>
             </ButtonGroup>
         </Col>
