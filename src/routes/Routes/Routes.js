@@ -10,6 +10,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Faq from "../../pages/Faq/Faq/Faq";
 import Blog from "../../pages/Blog/Blog/Blog";
 import Checkout from "../../pages/Checkout/Checkout/Checkout";
+import CourseDetail from "../../pages/Shared/CourseDetail/CourseDetail";
 
 export const routes = createBrowserRouter([
     {
@@ -19,24 +20,17 @@ export const routes = createBrowserRouter([
             {
                 path: "/",
                 element: <Home></Home>,
-                loader: () =>
-                    fetch(`https://news-wall-bd-server.vercel.app/news`),
             },
             {
                 path: "/courses",
                 element: <Courses></Courses>,
-                // loader: ({ params }) =>
-                //     fetch(
-                //         `https://news-wall-bd-server.vercel.app/category/${params.id}`
-                //     ),
+                loader: () => fetch(`http://localhost:5000/courses`),
             },
             {
-                path: "/news/:id",
-                element: <PrivateRoute>{/* <News></News> */}</PrivateRoute>,
+                path: "/courses/:id",
+                element: <CourseDetail></CourseDetail>,
                 loader: ({ params }) =>
-                    fetch(
-                        `https://news-wall-bd-server.vercel.app/news/${params.id}`
-                    ),
+                    fetch(`http://localhost:5000/courses/${params.id}`),
             },
             {
                 path: "/blog",
@@ -68,11 +62,7 @@ export const routes = createBrowserRouter([
             },
             {
                 path: "/checkout",
-                element: (
-                    <PrivateRoute>
-                        <Checkout></Checkout>
-                    </PrivateRoute>
-                ),
+                element: <Checkout></Checkout>,
             },
         ],
     },
