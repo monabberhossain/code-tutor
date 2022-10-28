@@ -4,11 +4,18 @@ import Card from "react-bootstrap/Card";
 import { Col, Row } from "react-bootstrap";
 import { Link, useLoaderData } from "react-router-dom";
 import LeftNav from "../LeftNav/LeftNav";
-import { FaCode, FaRegBookmark, FaShareAlt } from "react-icons/fa";
+import {
+    FaClock,
+    FaCode,
+    FaRegBookmark,
+    FaFileDownload,
+    FaStar,
+} from "react-icons/fa";
 
 const CourseDetail = () => {
     const course = useLoaderData();
-    const { title, image, description, syllabus } = course;
+    const { id, title, image, rating, price, duration, description, syllabus } =
+        course;
     const {
         lesson1,
         lesson2,
@@ -30,7 +37,7 @@ const CourseDetail = () => {
                         {title}
                         <span>
                             <FaRegBookmark className="me-2"></FaRegBookmark>
-                            <FaShareAlt></FaShareAlt>
+                            <FaFileDownload></FaFileDownload>
                         </span>
                     </Card.Header>
                     <Card.Body className="text-center mt-5">
@@ -41,6 +48,22 @@ const CourseDetail = () => {
                             </span>
                             {description}
                         </Card.Text>
+                        <div className="d-flex justify-content-around align-items-center text-primary border border-primary m-5 p-3 rounded-2">
+                            <span className="d-flex align-items-center">
+                                <FaStar></FaStar>
+                                <span className="ms-2">Rating: {rating}</span>
+                            </span>
+                            <span className="d-flex align-items-center">
+                                <b>Price: $</b>
+                                <span className="ms-2 fs-2 fw-bold">
+                                    {price}
+                                </span>
+                            </span>
+                            <span className="d-flex align-items-center">
+                                <FaClock></FaClock>
+                                <span className="ms-2">{duration} Hours</span>
+                            </span>
+                        </div>
                         <p className="list-unstyled text-start px-5">
                             <span className="fs-3 fw-semibold">
                                 All Lessons:
@@ -105,7 +128,7 @@ const CourseDetail = () => {
                         <Button className="my-4" variant="primary">
                             <Link
                                 className="text-decoration-none text-white fw-semibold"
-                                to="/checkout"
+                                to={`/checkout/courses/${id}`}
                             >
                                 Get Premium Access
                             </Link>

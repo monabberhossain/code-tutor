@@ -8,8 +8,15 @@ import {
     ListGroupItem,
     Row,
 } from "react-bootstrap";
+import { useLoaderData } from "react-router-dom";
 
 const Checkout = () => {
+    const course = useLoaderData();
+    const { title, image, price } = course;
+    const discount = 0;
+    const vat = parseInt(price) * 0;
+    const priceWithDiscount = parseInt(price) + discount;
+    const totalPrice = priceWithDiscount + vat;
     return (
         <div>
             <section className="h-100 gradient-custom">
@@ -23,22 +30,22 @@ const Checkout = () => {
                                 <Card.Body>
                                     <Row className="p-3">
                                         <Col
-                                            lg="4"
-                                            md="4"
+                                            lg="5"
+                                            md="5"
                                             className=" mb-4 mb-lg-0"
                                         >
                                             Course
                                         </Col>
                                         <Col
-                                            lg="4"
-                                            md="4"
+                                            lg="5"
+                                            md="5"
                                             className="mb-4 mb-lg-0"
                                         >
                                             Course Info
                                         </Col>
                                         <Col
-                                            lg="4"
-                                            md="4"
+                                            lg="2"
+                                            md="2"
                                             className="mb-4 mb-lg-0"
                                         >
                                             Price
@@ -46,25 +53,30 @@ const Checkout = () => {
                                     </Row>
                                     <Row className="p-3">
                                         <Col
-                                            lg="4"
-                                            md="4"
+                                            lg="5"
+                                            md="5"
                                             className=" mb-4 mb-lg-0"
                                         >
-                                            Course
+                                            {title}
                                         </Col>
                                         <Col
-                                            lg="4"
-                                            md="4"
+                                            lg="5"
+                                            md="5"
                                             className="mb-4 mb-lg-0"
                                         >
-                                            Course Info
+                                            <img
+                                                src={image}
+                                                alt=""
+                                                srcset=""
+                                                className="img-thumbnail"
+                                            />
                                         </Col>
                                         <Col
-                                            lg="4"
-                                            md="4"
+                                            lg="2"
+                                            md="2"
                                             className="mb-4 mb-lg-0"
                                         >
-                                            Price
+                                            {price}
                                         </Col>
                                     </Row>
                                 </Card.Body>
@@ -79,13 +91,21 @@ const Checkout = () => {
                                     <ListGroup flush>
                                         <ListGroupItem className="d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                             Products
-                                            <span>$53.98</span>
+                                            <span>$ {price}</span>
                                         </ListGroupItem>
                                         <ListGroupItem className="d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                             Discount
-                                            <span>-$0.00</span>
+                                            <span>-$ {discount}</span>
                                         </ListGroupItem>
                                         <hr />
+                                        <ListGroupItem className="d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                            Price After Discount
+                                            <span>$ {priceWithDiscount}</span>
+                                        </ListGroupItem>
+                                        <ListGroupItem className="d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                            Vat
+                                            <span>$ {vat}</span>
+                                        </ListGroupItem>
                                         <ListGroupItem className="d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                             <div>
                                                 <strong>Total amount</strong>
@@ -96,13 +116,13 @@ const Checkout = () => {
                                                 </strong>
                                             </div>
                                             <span>
-                                                <strong>$53.98</strong>
+                                                <strong>$ {totalPrice}</strong>
                                             </span>
                                         </ListGroupItem>
                                     </ListGroup>
 
                                     <Button block size="lg">
-                                        Go to checkout
+                                        Proceed To Pay
                                     </Button>
                                 </Card.Body>
                             </Card>
