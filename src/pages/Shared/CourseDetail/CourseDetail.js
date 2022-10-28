@@ -26,6 +26,21 @@ const CourseDetail = () => {
         lesson7,
         lesson8,
     } = syllabus;
+
+    const handlePDFDownload = () => {
+        // using Java Script method to get PDF file
+        fetch("C.pdf").then((response) => {
+            response.blob().then((blob) => {
+                // Creating new object of PDF file
+                const fileURL = window.URL.createObjectURL(blob);
+                // Setting various property values
+                let alink = document.createElement("a");
+                alink.href = fileURL;
+                alink.download = "C.pdf";
+                alink.click();
+            });
+        });
+    };
     return (
         <Row>
             <Col lg="9">
@@ -36,8 +51,14 @@ const CourseDetail = () => {
                     >
                         {title}
                         <span>
-                            <FaRegBookmark className="me-2"></FaRegBookmark>
-                            <FaFileDownload></FaFileDownload>
+                            <Link>
+                                <FaRegBookmark className="me-2"></FaRegBookmark>
+                            </Link>
+                            <Link>
+                                <FaFileDownload
+                                    onClick={handlePDFDownload}
+                                ></FaFileDownload>
+                            </Link>
                         </span>
                     </Card.Header>
                     <Card.Body className="text-center mt-5">

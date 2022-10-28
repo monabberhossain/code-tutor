@@ -17,6 +17,7 @@ const Checkout = () => {
     const vat = parseInt(price) * 0;
     const priceWithDiscount = parseInt(price) + discount;
     const totalPrice = priceWithDiscount + vat;
+
     return (
         <div>
             <section className="h-100 gradient-custom">

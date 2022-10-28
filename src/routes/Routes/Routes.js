@@ -11,6 +11,7 @@ import Faq from "../../pages/Faq/Faq/Faq";
 import Blog from "../../pages/Blog/Blog/Blog";
 import Checkout from "../../pages/Checkout/Checkout/Checkout";
 import CourseDetail from "../../pages/Shared/CourseDetail/CourseDetail";
+import Error from "../../pages/Others/Error/Error";
 
 export const routes = createBrowserRouter([
     {
@@ -73,5 +74,9 @@ export const routes = createBrowserRouter([
                     ),
             },
         ],
+    },
+    {
+        path: "*",
+        element: <Error></Error>,
     },
 ]);
