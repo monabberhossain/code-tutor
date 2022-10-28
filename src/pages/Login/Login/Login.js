@@ -6,11 +6,17 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { ButtonGroup, Col } from "react-bootstrap";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 
 const Login = () => {
     const [error, setError] = useState("");
     const [userEmail, setUserEmail] = useState("");
-    const { signIn, user, resetPassword } = useContext(AuthContext);
+    const { signIn, user, resetPassword, loginProvider } =
+        useContext(AuthContext);
+
+    const googleProvider = new GoogleAuthProvider();
+    const githubProvider = new GithubAuthProvider();
+
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -67,17 +73,37 @@ const Login = () => {
         if (!userEmail) {
             alert("Please enter your email address.");
             return;
-        }
-        else {
+        } else {
             resetPassword(userEmail)
                 .then(() => {
                     toast.error(
-                        "Your email is not verified. Please verify email."
+                        "Password reset email has sent. Please check email."
                     );
                 })
                 .catch((error) => console.log(error));
         }
     };
+
+    const handleSignInWithGoogle = () => {
+        loginProvider(googleProvider)
+            .then((result) => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch((error) => {toast.message(
+                        "Email is in use."
+                    )});
+    };
+
+    const handleSignInWithGithub = () => {
+        loginProvider(githubProvider)
+            .then((result) => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch((error) => console.log(error));
+    };
+    
     return (
         <Col lg={6}>
             <Form onSubmit={handleLogin}>
@@ -141,12 +167,14 @@ const Login = () => {
             </Form>
             <ButtonGroup className="mb-5" vertical>
                 <Button
+                    onClick={handleSignInWithGoogle}
                     className="mb-2 rounded-2 d-flex align-items-center"
                     variant="outline-primary"
                 >
                     <FaGoogle className="me-1"></FaGoogle>Sign In With Google
                 </Button>
                 <Button
+                    onClick={handleSignInWithGithub}
                     className="rounded-2 d-flex align-items-center"
                     variant="outline-dark"
                 >

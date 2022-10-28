@@ -18,7 +18,7 @@ const Blog = () => {
                         cross-origin images, stylesheets, scripts, iframes, and
                         videos
                     </p>
-                    <img src={Blog1} alt="" />
+                    <img className="img-fluid" src={Blog1} alt="" />
                     <p className="mt-3">
                         An example of a cross-origin request: the front-end
                         JavaScript code served from https://domain-a.com uses
