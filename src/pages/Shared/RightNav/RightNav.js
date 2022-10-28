@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-const LeftNav = () => {
+const RightNav = () => {
     const [data, setData] = useState();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/courses`)
+        fetch(`https://code-tutor-server-steel.vercel.app/courses`)
             .then((res) => res.json())
             .then((data) => setData(data));
         console.log(data);
@@ -17,4 +17,4 @@ const LeftNav = () => {
     );
 };
 
-export default LeftNav;
+export default RightNav;

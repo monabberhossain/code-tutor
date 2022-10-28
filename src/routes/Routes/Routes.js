@@ -25,13 +25,16 @@ export const routes = createBrowserRouter([
             {
                 path: "/courses",
                 element: <Courses></Courses>,
-                loader: () => fetch(`http://localhost:5000/courses`),
+                loader: () =>
+                    fetch(`https://code-tutor-server-steel.vercel.app/courses`),
             },
             {
                 path: "/courses/:id",
                 element: <CourseDetail></CourseDetail>,
                 loader: ({ params }) =>
-                    fetch(`http://localhost:5000/courses/${params.id}`),
+                    fetch(
+                        `https://code-tutor-server-steel.vercel.app/courses/${params.id}`
+                    ),
             },
             {
                 path: "/blog",
@@ -70,7 +73,7 @@ export const routes = createBrowserRouter([
                 ),
                 loader: ({ params }) =>
                     fetch(
-                        `http://localhost:5000/checkout/courses/${params.id}`
+                        `https://code-tutor-server-steel.vercel.app/checkout/courses/${params.id}`
                     ),
             },
         ],

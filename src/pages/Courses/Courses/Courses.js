@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import CourseCard from "../../Shared/CourseCard/CourseCard";
 
 const CourseSummary = () => {
+    const [data, setData] = useState('')
     const courses = useLoaderData();
+    setData(courses);
+    console.log(data);
     return (
         <Row xs={1} md={2} lg={3} className="g-4 mt-5">
             {courses.map((course) => (

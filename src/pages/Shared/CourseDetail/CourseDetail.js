@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Col, Row } from "react-bootstrap";
 import { Link, useLoaderData } from "react-router-dom";
-import LeftNav from "../LeftNav/LeftNav";
+import LeftNav from "../RightNav/RightNav";
 import {
     FaClock,
     FaCode,
@@ -11,6 +11,7 @@ import {
     FaFileDownload,
     FaStar,
 } from "react-icons/fa";
+import "./CourseDetail.css";
 
 const CourseDetail = () => {
     const course = useLoaderData();
@@ -62,14 +63,17 @@ const CourseDetail = () => {
                         </span>
                     </Card.Header>
                     <Card.Body className="text-center mt-5">
-                        <img src={image} alt="" />
-                        <Card.Text className="px-5 pt-5">
+                        <div>
+                            <img className="img-fluid" src={image} alt="" />
+                        </div>
+                        <Card.Text className="lg:px-5 md:px-3 sm:px-1 pt-5">
                             <span className="fs-3 fw-semibold">
                                 Description:
+                                <br />
                             </span>
                             {description}
                         </Card.Text>
-                        <div className="d-flex justify-content-around align-items-center text-primary border border-primary m-5 p-3 rounded-2">
+                        <div className="d-flex justify-content-around align-items-center text-primary border border-primary lg:m-5 md:m-3 sm:-1 p-3 rounded-2">
                             <span className="d-flex align-items-center">
                                 <FaStar></FaStar>
                                 <span className="ms-2">Rating: {rating}</span>
