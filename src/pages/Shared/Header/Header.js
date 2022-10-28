@@ -46,6 +46,37 @@ const Header = () => {
                         </Link>
                     </Nav>
                     <Nav className="d-flex align-items-center">
+                        <div
+                            className="btn-group"
+                            role="group"
+                            aria-label="Basic checkbox toggle button group"
+                        >
+                            <input
+                                type="checkbox"
+                                class="btn-check"
+                                id="btncheck1"
+                                autoComplete="off"
+                            />
+                            <label
+                                className="sm btn btn-outline-primary"
+                                for="btncheck1"
+                            >
+                                Light
+                            </label>
+
+                            <input
+                                type="checkbox"
+                                className="btn-check"
+                                id="btncheck2"
+                                autoComplete="off"
+                            />
+                            <label
+                                className="sm btn btn-outline-dark"
+                                for="btncheck2"
+                            >
+                                Dark
+                            </label>
+                        </div>
                         {user?.uid ? (
                             <>
                                 <Link
