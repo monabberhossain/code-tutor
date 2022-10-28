@@ -8,9 +8,60 @@ import { ButtonGroup, Col } from "react-bootstrap";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const Register = () => {
+    const [error, setError] = useState("");
+    const [accepted, setAccepted] = useState();
+    const navigate = useNavigate();
+    const { createUser, updateUserProfile, verifyEmail } =
+        useContext(AuthContext);
+
+    const handleRegister = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const name = form.name.value;
+        const photoURL = form.photoURL.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(name, email, password, photoURL);
+
+        createUser(email, password)
+            .then((result) => {
+                const user = result.user;
+                setError("");
+                form.reset();
+                handleUserProfile(name, photoURL);
+                handleEmailVerification();
+                navigate("/login");
+                toast.success(
+                    "You have successfully registered! Please verify your email to login."
+                );
+                console.log(user);
+            })
+            .catch((error) => {
+                setError(error.message);
+                console.log(error);
+            });
+    };
+
+    const handleUserProfile = (name, photoURL) => {
+        const profile = { displayName: name, photoURL: photoURL };
+        updateUserProfile(profile)
+            .then(() => {})
+            .catch((error) => console.log(error));
+    };
+
+    const handleEmailVerification = () => {
+        verifyEmail()
+            .then(() => {})
+            .catch((error) => console.log(error));
+    };
+
+    const handleAccept = (event) => {
+        const accepted = event.target.checked;
+        setAccepted(accepted);
+    };
     return (
         <Col lg={6}>
-            <Form>
+            <Form onSubmit={handleRegister}>
                 <Form.Group className="mb-3" controlId="formBasicName">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
@@ -46,6 +97,7 @@ const Register = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check
+                        onClick={handleAccept}
                         type="checkbox"
                         label={
                             <>
@@ -68,6 +120,7 @@ const Register = () => {
                     style={{ letterSpacing: "2px", padding: "10px 40px" }}
                     variant="primary"
                     type="submit"
+                    disabled={!accepted}
                 >
                     <b>Register</b>
                 </Button>
@@ -86,7 +139,7 @@ const Register = () => {
                         </Link>
                     </small>
                 </p>
-                <Form.Text className="mx-2 text-danger"></Form.Text>
+                <Form.Text className="mx-2 text-danger">{error}</Form.Text>
             </Form>
             <ButtonGroup className="mb-5" vertical>
                 <Button

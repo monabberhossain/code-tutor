@@ -10,11 +10,11 @@ import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 const Header = () => {
     const { user, logOut } = useContext(AuthContext);
 
-const handleLogOut = () => {
-    logOut()
-        .then(() => {})
-        .catch((error) => console.log(error));
-};
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {})
+            .catch((error) => console.log(error));
+    };
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Container>
@@ -46,49 +46,55 @@ const handleLogOut = () => {
                         </Link>
                     </Nav>
                     <Nav className="d-flex align-items-center">
-                        <>
-                            <Link
-                                to="/profile"
-                                className="p-0 me-2 text-decoration-none"
-                            >
-                                <span className="me-2"></span>
-                                <span>
-                                    <Image
-                                        style={{ height: "30px" }}
-                                        roundedCircle
-                                    ></Image>
-                                    <FaUser className="fs-5"></FaUser>
-                                </span>
-                                <Button
-                                    className="ms-2 fw-semibold"
-                                    size="sm"
-                                    variant="outline-primary"
+                        {user?.uid ? (
+                            <>
+                                <Link
+                                    to="/profile"
+                                    className="p-0 me-2 text-decoration-none"
                                 >
-                                    Log Out
-                                </Button>
-                            </Link>
-                        </>
-
-                        <div className="d-flex flex-row">
-                            <Link to="/login">
-                                <Button
-                                    className="ms-2 fw-semibold"
-                                    size="sm"
-                                    variant="outline-primary"
-                                >
-                                    Login
-                                </Button>
-                            </Link>
-                            <Link to="/register">
-                                <Button
-                                    className="ms-2 fw-semibold"
-                                    size="sm"
-                                    variant="outline-primary"
-                                >
-                                    Register
-                                </Button>
-                            </Link>
-                        </div>
+                                    <span title={user?.displayName}>
+                                        {user?.photoURL ? (
+                                            <Image
+                                                style={{ height: "30px" }}
+                                                roundedCircle
+                                                src={user.photoURL}
+                                            ></Image>
+                                        ) : (
+                                            <FaUser className="fs-5"></FaUser>
+                                        )}
+                                    </span>
+                                    <Button
+                                        onClick={handleLogOut}
+                                        className="ms-2 fw-semibold"
+                                        size="sm"
+                                        variant="outline-primary"
+                                    >
+                                        Log Out
+                                    </Button>
+                                </Link>
+                            </>
+                        ) : (
+                            <div className="d-flex flex-row">
+                                <Link to="/login">
+                                    <Button
+                                        className="ms-2 fw-semibold"
+                                        size="sm"
+                                        variant="outline-primary"
+                                    >
+                                        Login
+                                    </Button>
+                                </Link>
+                                <Link to="/register">
+                                    <Button
+                                        className="ms-2 fw-semibold"
+                                        size="sm"
+                                        variant="outline-primary"
+                                    >
+                                        Register
+                                    </Button>
+                                </Link>
+                            </div>
+                        )}
                     </Nav>
                     <div className="d-lg-none"></div>
                 </Navbar.Collapse>

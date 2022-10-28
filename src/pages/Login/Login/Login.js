@@ -10,7 +10,7 @@ import { FaGithub, FaGoogle } from "react-icons/fa";
 const Login = () => {
     const [error, setError] = useState("");
     const [userEmail, setUserEmail] = useState("");
-    const { signIn, user, resetPassword, } = useContext(AuthContext);
+    const { signIn, user, resetPassword } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -57,14 +57,26 @@ const Login = () => {
         }
     }, [user, navigate, from]);
 
+    const handleUserEmail = (event) => {
+        const email = event.target.email.value;
+        console.log(email);
+        setUserEmail(email);
+    };
+
     const handleForgotPassword = () => {
         if (!userEmail) {
             alert("Please enter your email address.");
             return;
         }
-        resetPassword(userEmail)
-            .then(() => {toast.error("Your email is not verified. Please verify email.");})
-            .catch((error) => console.log(error));
+        else {
+            resetPassword(userEmail)
+                .then(() => {
+                    toast.error(
+                        "Your email is not verified. Please verify email."
+                    );
+                })
+                .catch((error) => console.log(error));
+        }
     };
     return (
         <Col lg={6}>
@@ -72,6 +84,7 @@ const Login = () => {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
+                        onBlur={handleUserEmail}
                         name="email"
                         type="email"
                         placeholder="Enter email"
